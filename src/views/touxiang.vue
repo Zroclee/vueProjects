@@ -107,12 +107,7 @@ export default {
     },
     //生命周期 - 挂载完成（可以访问DOM元素）
     mounted() {
-        console.log('imageUrls', this.imageUrls)
-        this.imageNames.forEach(value => {
-            var item = document.getElementById('team-item-'+value)
-            console.log('item', item.getBoundingClientRect());
-            
-        })
+        // console.log('imageUrls', this.imageUrls)
     },
     //方法集合
     methods: {

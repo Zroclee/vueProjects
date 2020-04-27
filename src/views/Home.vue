@@ -1,5 +1,9 @@
 <template>
-  <div class=''></div>
+  <div class='wrapper'>
+    <router-link to="/bilibili">
+      <div>哔哩哔哩</div>
+    </router-link>
+  </div>
 </template>
 
 <script>
