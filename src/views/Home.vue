@@ -1,7 +1,16 @@
 <template>
-  <div class='wrapper'>
+  <div class="wrapper">
     <router-link to="/bilibili">
       <div>哔哩哔哩</div>
+    </router-link>
+    <router-link to="/baiduditu">
+      <div>百度地图</div>
+    </router-link>
+    <router-link to="/chart">
+      <div>echarts</div>
+    </router-link>
+    <router-link to="/gaode">
+      <div>高德地图</div>
     </router-link>
   </div>
 </template>
@@ -10,12 +19,10 @@
 //例如：import 《组件名称》 from '《组件路径》';
 
 export default {
-  name: '',
+  name: "",
   components: {},
   data() {
-    return {
-      
-    };
+    return {};
   },
   //监听属性 类似于data概念
   computed: {},
@@ -26,12 +33,9 @@ export default {
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {},
   //方法集合
-  methods: {
-    
-  },
-}
+  methods: {},
+};
 </script>
 <style  scoped>
 /* @import url(); 引入公共css类 */
-
 </style>

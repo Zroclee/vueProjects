@@ -12,7 +12,7 @@ module.exports = {
             template: 'public/index.html',    //模板来源
             filename: 'index.html',            //在 dist/index.html 的输出
             //title在template中使用：<title><%=htmlWebpackPlugin.options.title%></title>
-            title: '生成的配置信息',        
+            title: 'VUE',        
             chunks: ['chunk-vendors', 'chunk-common', 'index'] 
             // 在这个页面中包含的块，默认情况下会包含,提取出来的通用 chunk 和 vendor chunk
         },
@@ -23,8 +23,11 @@ module.exports = {
     css: {
         extract: true,           //是否使用css分离插件 ExtractTextPlugin
         sourceMap: false,        //开启 CSS source maps
-        loaderOptions:{},       //css预设器配置项
-        modules: false           //启用CSS modules for all css / pre-processor files.
+        loaderOptions:{
+            //css预设器配置项
+        },       
+        requireModuleExtension: false, // 如果你想去除文件命中的.modules  升级v3后使用css.requireModuleExtension代替css.modules
+        //modules: false           //启用CSS modules for all css / pre-processor files.
     },
     devServer: {    //环境配置
         host: 'localhost',

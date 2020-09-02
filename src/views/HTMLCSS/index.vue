@@ -62,6 +62,10 @@
       </div>
     </div>
 
+    <div>
+      <h3>雷达扫描图</h3>
+      <canvas ref="radarView" :width="radarW" :height="radarW" class="radar-view"></canvas>
+    </div>
   </div>
 </template>
 
@@ -70,55 +74,103 @@
 // import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
     // HelloWorld
+  },
+  data() {
+    return {
+      radarW: 400
+    };
+  },
+  mounted() {
+    // this.radarW = this.$refs.radarView.clientWidth;
+    // console.log("radarView", this.radarW);
+    this.drawRadarCanvas();
+  },
+  methods: {
+    drawRadarCanvas() {
+      var canvas = this.$refs.radarView;
+      var ctx = canvas.getContext("2d");
+      var centerPoint = { x: this.radarW / 2, y: this.radarW / 2 };
+      var radius = this.radarW / 2;
+
+      // 计算
+      var startX = centerPoint.x + (radius / 2) * Math.cos(0);
+      var startY = centerPoint.y + (radius / 2) * Math.sin(0);
+      var endX = centerPoint.x + (radius / 2) * Math.cos(0.5 * Math.PI);
+      var endY = centerPoint.y + (radius / 2) * Math.sin(0.5 * Math.PI);
+      console.log("start", startX, startY, endX, endY);
+
+      var gradient = ctx.createLinearGradient(startX, startY, endX, endY);
+      gradient.addColorStop(0, "rgba(0,255,0,0.1)");
+      gradient.addColorStop(1, "rgba(0,255,0,0.7)");
+
+      // ctx.beginPath();
+      // ctx.arc(centerPoint.x, centerPoint.y, radius, 0, 0.5 * Math.PI);
+      // ctx.lineTo(centerPoint.x, centerPoint.y);
+      // ctx.fillStyle = gradient;
+      // ctx.fill();
+      var sum = 100;
+      var space = 0.5 / sum;
+      var alpha = 0.5 / sum;
+      for (let i = 0; i < sum; i++) {
+        ctx.beginPath();
+        ctx.arc(
+          centerPoint.x,
+          centerPoint.y,
+          radius,
+          space * i * Math.PI,
+          space * (i + 1) * Math.PI
+        );
+        ctx.lineTo(centerPoint.x, centerPoint.y);
+        ctx.fillStyle = "rgba(0,255,0," + i * alpha + ")";
+        ctx.closePath();
+        ctx.fill();
+      }
+    }
   }
-}
+};
 </script>
-<style scoped>
-.bfc_container{
+<style lang="scss" scoped>
+.bfc_container {
   border: 3px solid red;
   overflow: hidden;
 }
-.bfc_inner{
+.bfc_inner {
   float: left;
-  background: #08BDEB;
+  background: #08bdeb;
   height: 100px;
   width: 100px;
 }
-.flex_container{
+.flex_container {
   display: flex;
-  flex-direction: row;/* 属性决定主轴的方向 row(左->右) | row-reverse(右->左) | column(上->下) | column-reverse(下->上) */ 
+  flex-direction: row; /* 属性决定主轴的方向 row(左->右) | row-reverse(右->左) | column(上->下) | column-reverse(下->上) */
   flex-wrap: wrap; /* 如果一条轴线排不下，如何换行 nowrap不换行 | wrap换行，第一行在上方。 | wrap-reverse;换行，第一行在下方。 */
   /* flex-flow: row wrap; flex-flow属性是flex-direction属性和flex-wrap属性的简写形式，默认值为row nowrap */
   justify-content: center; /* 定义了项目在主轴上的对齐方式。flex-start左对齐 | flex-end右对齐 | center居中 | space-between两端对齐 | space-around;每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。 */
-  align-items: center;/* 定义项目在交叉轴上如何对齐 flex-start交叉轴的起点对齐 | flex-end终点对齐 | center中点对齐 | baseline项目的第一行文字的基线对齐 | stretch;（默认值）：如果项目未设置高度或设为auto，将占满整个容器的高度。 */
-  align-content: center;/* 定义了多根轴线的对齐方式 flex-start与交叉轴的起点对齐 | flex-end终点对齐 | center中点对齐 | space-between与交叉轴两端对齐，轴线之间的间隔平均分布。 | space-around 每根轴线两侧的间隔都相等。所以，轴线之间的间隔比轴线与边框的间隔大一倍。| stretch;（默认值）：轴线占满整个交叉轴。 */
+  align-items: center; /* 定义项目在交叉轴上如何对齐 flex-start交叉轴的起点对齐 | flex-end终点对齐 | center中点对齐 | baseline项目的第一行文字的基线对齐 | stretch;（默认值）：如果项目未设置高度或设为auto，将占满整个容器的高度。 */
+  align-content: center; /* 定义了多根轴线的对齐方式 flex-start与交叉轴的起点对齐 | flex-end终点对齐 | center中点对齐 | space-between与交叉轴两端对齐，轴线之间的间隔平均分布。 | space-around 每根轴线两侧的间隔都相等。所以，轴线之间的间隔比轴线与边框的间隔大一倍。| stretch;（默认值）：轴线占满整个交叉轴。 */
   vertical-align: center;
-  
-  
-  font-family: 'Open Sans', sans-serif;
+
+  font-family: "Open Sans", sans-serif;
 
   background: linear-gradient(to top, #222, #333);
 }
-.flex_box{
+.flex_box {
   margin: 16px;
   padding: 4px;
-  
+
   background-color: #e7e7e7;
   width: 104px;
   height: 104px;
   object-fit: contain;
-  
-  box-shadow:
-    inset 0 5px white, 
-    inset 0 -5px #bbb,
-    inset 5px 0 #d7d7d7, 
+
+  box-shadow: inset 0 5px white, inset 0 -5px #bbb, inset 5px 0 #d7d7d7,
     inset -5px 0 #d7d7d7;
   border-radius: 10%;
 }
-.flex_item{
+.flex_item {
   display: block;
   width: 24px;
   height: 24px;
@@ -127,12 +179,12 @@ export default {
   background-color: #333;
   box-shadow: inset 0 3px #111, inset 0 -3px #555;
 }
-.dice_one{
+.dice_one {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.dice_two{
+.dice_two {
   display: flex;
   flex-direction: column;
   /* align-items: center; */
@@ -141,7 +193,7 @@ export default {
 .dice_two .flex_item:nth-of-type(2) {
   align-self: flex-end;
 }
-.dice_three{
+.dice_three {
   display: flex;
   flex-direction: column;
   /* align-items: center; */
@@ -185,5 +237,8 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+.radar-view {
+  background-color: black;
 }
 </style>
