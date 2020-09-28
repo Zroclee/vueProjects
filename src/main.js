@@ -11,6 +11,16 @@ Vue.use(BaiduMap, {
   ak: 'vU4uB163eQqDDkPAFNbEElcXLkfjzGo7'
 })
 
+// 高德地图
+// import AMap from 'vue-amap';
+// Vue.use(AMap);
+// AMap.initAMapApiLoader({
+//   // 高德key
+//   key: '856434d91a5682e6eaeb5c399f3c5f01',
+//   // 插件集合 （插件按需引入）
+//   plugin: ['AMap.Geolocation']
+// });
+
 Vue.config.productionTip = false
 
 new Vue({
